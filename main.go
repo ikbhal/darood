@@ -109,10 +109,12 @@ func handleRequests() {
 	fs := http.FileServer(http.Dir("./static"))
 	http.Handle("/", fs)
 
-	http.HandleFunc("/api/v1/counter", decrementCounter)
+	// http.HandleFunc("/api/v1/counter", decrementCounter)
 	// http.HandleFunc("/api/v1/counter", decrementCounter).Methods("PUT")
 	// http.HandleFunc("/api/v1/counter", getCounter).Methods("GET")
 	// http.HandleFunc("/api/v2/counter", getCounterDb).Methods("GET")
+
+	http.HandleFunc("/api/v3/test", homePage)
 
 	//http.HandleFunc("/", homePage)
 	fmt.Println("server startging at 3010")
