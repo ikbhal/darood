@@ -18,12 +18,13 @@ body {
 $(document).ready(function(){
 
 
-        $.get('/api/v1/counter',function(data, status) {
+        // $.get('/api/v1/counter/get',function(data, status) {
+			$.get('/api/v2/counter/get',function(data, status) {
                 var data1 = $.parseJSON(data);
                 console.log("data:", data, ", status:", status);
                 if(data1 && data1.counter){
-                  $('#counter').text(data1.counter);
-                  $('#mainQty').val(data1.counter);
+                  $('#counter').text(data1.Counter);
+                  $('#mainQty').val(data1.Counter);
                 }
 	});
 
@@ -46,14 +47,15 @@ var incrementMinus = buttonMinus.click(function() {
 	//$n.val(Number($n.val())+1 );
 
 		$.ajax({
-			url:'/api/v1/counter',
-			type: 'PUT',
+			url:'/api/v1/counter/decr',
+			// type: 'PUT',
+			type: 'GET',
 			success:function(data, status) {
                 		var data1 = $.parseJSON(data);
 				console.log("data:", data, ", status:", status);
                 		if(data1 && data1.counter){
-                  			$('#counter').text(data1.counter);
-                  			$n.val(data1.counter);
+                  			$('#counter').text(data1.Counter);
+                  			$n.val(data1.Counter);
 				}
 			}
 		});
