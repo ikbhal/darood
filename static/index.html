@@ -1,0 +1,92 @@
+<html>
+  <head>
+    <title>Crore Darood</title>
+
+
+    <style>
+body {
+	padding: 5em;
+}
+
+.container {
+	margin-top: 20px;
+}
+    </style>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+$(document).ready(function(){
+
+
+        $.get('/api/v1/counter',function(data, status) {
+                var data1 = $.parseJSON(data);
+                console.log("data:", data, ", status:", status);
+                if(data1 && data1.counter){
+                  $('#counter').text(data1.counter);
+                  $('#mainQty').val(data1.counter);
+                }
+	});
+
+
+var incrementPlus;
+var incrementMinus;
+
+
+
+var buttonPlus  = $(".cart-qty-plus");
+var buttonMinus = $(".cart-qty-minus");
+
+var incrementMinus = buttonMinus.click(function() {
+     console.log("inside incrment minus");
+
+	var $n = $(this)
+		.parent(".button-container")
+		.parent(".container")
+		.find(".qty");
+	//$n.val(Number($n.val())+1 );
+
+		$.ajax({
+			url:'/api/v1/counter',
+			type: 'PUT',
+			success:function(data, status) {
+                		var data1 = $.parseJSON(data);
+				console.log("data:", data, ", status:", status);
+                		if(data1 && data1.counter){
+                  			$('#counter').text(data1.counter);
+                  			$n.val(data1.counter);
+				}
+			}
+		});
+});
+
+var incrementPlus = buttonPlus.click(function() {
+	/*	
+	var $n = $(this)
+		.parent(".button-container")
+		.parent(".container")
+		.find(".qty");
+	var amount = Number($n.val());
+	if (amount > 0) {
+		$n.val(amount-1);
+	}*/
+});
+
+});
+    </script>
+  </head>
+  <body>
+    <h1>Crore Darood Insha allah</h1>
+
+
+    <div class="container">
+      <p>Darood counter <span id="counter">10000000</span></p>
+      <input id ="mainQty" type="text" name="qty" class="qty" maxlength="12" value="0" class="input-text qty" />
+      <div class="button-container">
+	<button class="cart-qty-plus" type="button" value="+">+</button>
+	<button class="cart-qty-minus" type="button" value="-">-</button>
+      </div>
+    </div>
+
+
+  </body>
+</html>
