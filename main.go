@@ -83,6 +83,38 @@ func getCounter(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
+func decrementCounterDbHelper(name string) {
+	fmt.Println("inside decremenetCounterDbHelper")
+	db, err := sql.Open("sqlite3", file)
+
+	if err != nil {
+		fmt.Println("Unable to open darood.db sqlite db")
+	}
+
+	defer db.Close()
+
+	stmt, err := db.Prepare("UPDATE darood set counter = counter - 1 where name= ?")
+	defer stmt.Close()
+
+	stmt.Exec(name)
+}
+
+func decrementCounterDb(w http.ResponseWriter, r *http.Request) {
+	decrementCounterDbHelper(croreDaroodName) // for now crore darood
+	w.WriteHeader(http.StatusCreated)
+	w.Header().Set("Content-Type", "application/json")
+	resp := make(map[string]interface{})
+	resp["message"] = "Counter decremented"
+	resp["counter"] = counter
+	jsonResp, err := json.Marshal(resp)
+	if err != nil {
+		log.Fatalf("Error happend in JSON marshal. Err: %s", err)
+
+	}
+	w.Write(jsonResp)
+	return
+}
+
 func decrementCounter(w http.ResponseWriter, r *http.Request) {
 	counter--
 	w.WriteHeader(http.StatusCreated)
@@ -104,6 +136,7 @@ func handleRequests() {
 	http.Handle("/", fs)
 
 	http.HandleFunc("/api/v1/counter/decr", decrementCounter)
+	http.HandleFunc("/api/v2/counter/decr", decrementCounterDb)
 	// http.HandleFunc("/api/v1/counter", decrementCounter).Methods("PUT")
 	http.HandleFunc("/api/v1/counter/get", getCounter)
 	http.HandleFunc("/api/v2/counter/get", getCounterDb)

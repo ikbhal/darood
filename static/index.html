@@ -15,65 +15,56 @@ body {
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script>
-$(document).ready(function(){
 
-
-        // $.get('/api/v1/counter/get',function(data, status) {
-			$.get('/api/v2/counter/get',function(data, status) {
-                var data1 = $.parseJSON(data);
-                console.log("data:", data, ", status:", status);
-                if(data1 && data1.counter){
-                  $('#counter').text(data1.Counter);
-                  $('#mainQty').val(data1.Counter);
-                }
-	});
-
-
-var incrementPlus;
-var incrementMinus;
-
-
-
-var buttonPlus  = $(".cart-qty-plus");
-var buttonMinus = $(".cart-qty-minus");
-
-var incrementMinus = buttonMinus.click(function() {
-     console.log("inside incrment minus");
-
-	var $n = $(this)
-		.parent(".button-container")
-		.parent(".container")
-		.find(".qty");
-	//$n.val(Number($n.val())+1 );
-
-		$.ajax({
-			url:'/api/v1/counter/decr',
-			// type: 'PUT',
-			type: 'GET',
-			success:function(data, status) {
-                		var data1 = $.parseJSON(data);
-				console.log("data:", data, ", status:", status);
-                		if(data1 && data1.counter){
-                  			$('#counter').text(data1.Counter);
-                  			$n.val(data1.Counter);
-				}
+	function getCounterAndUpdate(){
+		$.get('/api/v2/counter/get',function(data, status) {
+			var data1 = $.parseJSON(data);
+			console.log("data:", data, ", status:", status);
+			if(data1 && data1.Counter){
+				$('#counter').text(data1.Counter);
+				$('#mainQty').val(data1.Counter);
 			}
 		});
-});
+	}
 
-var incrementPlus = buttonPlus.click(function() {
-	/*	
-	var $n = $(this)
-		.parent(".button-container")
-		.parent(".container")
-		.find(".qty");
-	var amount = Number($n.val());
-	if (amount > 0) {
-		$n.val(amount-1);
-	}*/
-});
+	$(document).ready(function(){
 
-});
+		getCounterAndUpdate();
+
+		var incrementPlus;
+		var incrementMinus;
+
+		var buttonPlus  = $(".cart-qty-plus");
+		var buttonMinus = $(".cart-qty-minus");
+
+		var incrementMinus = buttonMinus.click(function() {
+			console.log("inside incrment minus");
+
+			var $n = $(this)
+				.parent(".button-container")
+				.parent(".container")
+				.find(".qty");
+				$.ajax({
+					// url:'/api/v1/counter/decr',
+					url:'/api/v2/counter/decr',
+					// type: 'PUT',
+					type: 'GET',
+					success:function(data, status) {
+						// var data1 = $.parseJSON(data);
+						// console.log("data:", data, ", status:", status);
+						// if(data1 && data1.counter){
+						// 	$('#counter').text(data1.Counter);
+						// 	$n.val(data1.Counter);
+						// }
+						getCounterAndUpdate();
+					}
+				});
+		});
+
+		var incrementPlus = buttonPlus.click(function() {
+		});
+
+	});
     </script>
   </head>
   <body>
