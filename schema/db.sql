@@ -24,3 +24,6 @@ user_id integer not null,
 date varchar(20) // dd-mm-yyyy
 count integer default 0
 );
+
+/*add column */
+alter table user add column username varchar(512) not null;

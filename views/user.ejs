@@ -1,0 +1,32 @@
+<html>
+    <head>
+        <title>Crore Darood</title>
+        <link rel=”stylesheet” href="http//code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css"> 
+        <script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+        <script type="text/script">
+            var counter = 0;
+            $(document).ready(function () {
+     
+                $("#counter").text(counter);
+                $("#counterBtn").click(()=>{
+                    counter++;
+                    $("#counter").text(counter);
+                    console.log("increaes counter button, couonter:" + counter);
+                })
+            });
+        </script>
+    </head>
+    <body>
+        <div data-role="page" id="page1">
+            <div data-role="header">
+                <h1>Crore Darood</h1>
+                <h2>User name: <%= name%></h2>
+            </div>
+            <div role="main" class="ui-content">
+                <div>Counter:<span id="counter">0</span></div>
+                <input type="button" value="+" id="counterBtn">
+            </div>
+        </div>
+    </body>
+</html>

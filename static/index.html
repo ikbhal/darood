@@ -61,7 +61,30 @@ body {
 				});
 		});
 
+
 		var incrementPlus = buttonPlus.click(function() {
+
+			console.log("inside incrment plus");
+
+			var $n = $(this)
+				.parent(".button-container")
+				.parent(".container")
+				.find(".qty");
+				$.ajax({
+					// url:'/api/v1/counter/decr',
+					url:'/api/v2/counter/incr',
+					// type: 'PUT',
+					type: 'GET',
+					success:function(data, status) {
+						// var data1 = $.parseJSON(data);
+						// console.log("data:", data, ", status:", status);
+						// if(data1 && data1.counter){
+						// 	$('#counter').text(data1.Counter);
+						// 	$n.val(data1.Counter);
+						// }
+						getCounterAndUpdate();
+					}
+				});
 		});
 
 	});
